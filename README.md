@@ -1,3 +1,3 @@
-# Dgango
+# Django
 
 Learning Django
