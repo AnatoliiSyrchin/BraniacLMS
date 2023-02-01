@@ -93,7 +93,8 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.github.GithubOAuth2",
     "social_core.backends.vk.VKOAuth2",
-    "django.contrib.auth.backends.ModelBackend",
+    # "django.contrib.auth.backends.ModelBackend",
+    "authapp.backends.CaseInsensitiveModelBackend", 
 )
 
 SOCIAL_AUTH_GITHUB_KEY = "8f78cf967acbc2fe0b7c"
