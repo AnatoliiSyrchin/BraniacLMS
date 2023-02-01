@@ -92,16 +92,21 @@ DATABASES = {
 
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.github.GithubOAuth2",
+    "social_core.backends.vk.VKOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
 
 SOCIAL_AUTH_GITHUB_KEY = "8f78cf967acbc2fe0b7c"
 SOCIAL_AUTH_GITHUB_SECRET = "3ac357f073e92c5c8a3de36b3fa50d8dd36df00d"
 
+SOCIAL_AUTH_VK_OAUTH2_KEY = "51540178"
+SOCIAL_AUTH_VK_OAUTH2_SECRET = "jl9cFPfzYXqRNQ3jk8P5"
+
 AUTH_USER_MODEL = "authapp.CustomUser"
 
 LOGIN_REDIRECT_URL = "mainapp:main_page"
 LOGOUT_REDIRECT_URL = "mainapp:main_page"
+
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
