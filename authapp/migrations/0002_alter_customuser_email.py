@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authapp', '0001_initial'),
+        ("authapp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='email',
-            field=models.EmailField(error_messages={'unique': 'A user with that email address already exists.'}, max_length=256, unique=True, verbose_name='email address'),
+            model_name="customuser",
+            name="email",
+            field=models.EmailField(
+                error_messages={"unique": "A user with that email address already exists."},
+                max_length=256,
+                unique=True,
+                verbose_name="email address",
+            ),
         ),
     ]

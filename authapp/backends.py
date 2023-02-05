@@ -1,14 +1,21 @@
-from django.contrib.auth.backends import BaseBackend
-# from django.contrib.auth.hashers import check_password
-from authapp.models import CustomUser
+from django.contrib.auth import get_user_model
+from django.contrib.auth.backends import ModelBackend
 
-class CaseInsensitiveModelBackend(BaseBackend):
-    def authenticate(self, request, username=None, password=None):
+UserModel = get_user_model()
+
+
+class CaseInsensitiveModelBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        if username is None:
+            username = kwargs.get(UserModel.USERNAME_FIELD)
+        if username is None or password is None:
+            return
         try:
-            user = CustomUser.objects.get(username__iexact=username)
-            if user.check_password(password):
+            user = UserModel.objects.get(username__iexact=username)
+        except UserModel.DoesNotExist:
+            # Run the default password hasher once to reduce the timing
+            # difference between an existing and a nonexistent user (#20760).
+            UserModel().set_password(password)
+        else:
+            if user.check_password(password) and self.user_can_authenticate(user):
                 return user
-            else:
-                return None
-        except CustomUser.DoesNotExist:
-            return None
