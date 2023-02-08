@@ -39,5 +39,6 @@ urlpatterns = [
     path("contacts/", views.ContactsPageView.as_view(), name="contacts"),
     path("doc_site/", views.DocSitePageView.as_view(), name="doc_site"),
     path("log_view/", views.LogView.as_view(), name="log_view"),
+    path("log_view_last/", views.LogViewLast.as_view(), name="log_view_last"),
     path("log_download/", views.LogDownloadView.as_view(), name="log_download"),
 ]
