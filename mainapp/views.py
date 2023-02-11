@@ -86,10 +86,19 @@ class CoursesDetailView(TemplateView):
         if not cached_feedback:
             context["feedback_list"] = (
                 mainapp_models.CourseFeedback.objects.filter(course=context["course_object"])
-                .order_by("-created", "-rating")[:5]
+                .order_by("-created", "-rating")
                 .select_related()
             )
-            cache.set(f"feedback_list_{pk}", context["feedback_list"], timeout=300)
+            cache.set(f"feedback_list_{pk}", context["feedback_list"], timeout=300)  # 5 minutes
+
+            # Archive object for tests --->
+            import pickle
+
+            with open(f"mainapp/fixtures/005_feedback_list_{pk}.bin", "wb") as outf:
+                # print('feedback_List', context["feedback_list"])
+                pickle.dump(context["feedback_list"], outf)
+            # <--- Archive object for tests
+
         else:
             context["feedback_list"] = cached_feedback
 
