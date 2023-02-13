@@ -1,4 +1,5 @@
 import logging
+import subprocess
 
 from django.conf import settings
 from django.contrib import messages
@@ -163,6 +164,16 @@ class LogView(TemplateView):
                     break
                 log_slice.insert(0, line)  # append at start
             context["log"] = "".join(log_slice)
+        return context
+
+
+class LogViewLast(TemplateView):
+    template_name = "mainapp/log_view_last.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(LogViewLast, self).get_context_data(**kwargs)
+        log_tail = subprocess.check_output(["tail", "-n 1000", settings.LOG_FILE], universal_newlines=True)
+        context["log"] = log_tail
         return context
 
 
